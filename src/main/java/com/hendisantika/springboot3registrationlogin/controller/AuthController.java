@@ -5,11 +5,13 @@ import com.hendisantika.springboot3registrationlogin.entity.User;
 import com.hendisantika.springboot3registrationlogin.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.List;
  * Time: 08:53
  * To change this template use File | Settings | File Templates.
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
@@ -67,7 +70,23 @@ public class AuthController {
     @GetMapping("/users")
     public String listRegisteredUsers(Model model) {
         List<UserDto> users = userService.findAllUsers();
+        users.forEach(System.out::println);
         model.addAttribute("users", users);
         return "users";
     }
+
+    @GetMapping("/users/edit/{id}")
+    public String showEditUsersForm(@PathVariable Long id, Model model) {
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        return "edit";
+    }
+
+//    @PostMapping("/users/edit")
+//    public String updateUsers(@Valid @ModelAttribute("user") UserDto user,
+//                              BindingResult result, Model model) {
+//        User user = userService.findById(id);
+//        model.addAttribute("user", user);
+//        return "edit";
+//    }
 }
