@@ -32,7 +32,7 @@ import java.util.List;
 public class AuthController {
     private final UserService userService;
 
-    @GetMapping("index")
+    @GetMapping({"/", "index"})
     public String home() {
         return "index";
     }
@@ -82,11 +82,17 @@ public class AuthController {
         return "edit";
     }
 
-//    @PostMapping("/users/edit")
-//    public String updateUsers(@Valid @ModelAttribute("user") UserDto user,
-//                              BindingResult result, Model model) {
-//        User user = userService.findById(id);
-//        model.addAttribute("user", user);
-//        return "edit";
-//    }
+    @PostMapping("/users/update")
+    public String updateUsers(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
+//        User existing = userService.findByEmail(user.getEmail());
+//        if (existing != null) {
+//            result.rejectValue("email", null, "There is already an account registered with that email");
+//        }
+//        if (result.hasErrors()) {
+//            model.addAttribute("user", user);
+//            return "register";
+//        }
+        userService.updateUser(user);
+        return "redirect:/login";
+    }
 }

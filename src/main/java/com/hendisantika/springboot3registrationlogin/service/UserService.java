@@ -8,6 +8,7 @@ import com.hendisantika.springboot3registrationlogin.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +31,7 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public void saveUser(UserDto userDto) {
         User user = new User();
         user.setFirstName(userDto.getFirstName());
@@ -53,6 +55,25 @@ public class UserService {
 
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
+    }
+
+    @Transactional
+    public void updateUser(UserDto userDto) {
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+
+        //encrypt the password once we integrate spring security
+        //user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        Role role = roleRepository.findByName("ROLE_ADMIN");
+        if (role == null) {
+            role = checkRoleExist();
+        }
+        user.setRoles(Collections.singletonList(role));
+        userRepository.save(user);
     }
 
     public List<UserDto> findAllUsers() {
