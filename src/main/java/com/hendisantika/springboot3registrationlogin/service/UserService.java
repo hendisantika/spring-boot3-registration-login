@@ -1,10 +1,16 @@
 package com.hendisantika.springboot3registrationlogin.service;
 
+import com.hendisantika.springboot3registrationlogin.dto.UserDto;
+import com.hendisantika.springboot3registrationlogin.entity.Role;
+import com.hendisantika.springboot3registrationlogin.entity.User;
 import com.hendisantika.springboot3registrationlogin.repository.RoleRepository;
 import com.hendisantika.springboot3registrationlogin.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,4 +28,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+
+    public void saveUser(UserDto userDto) {
+        User user = new User();
+        user.setName(userDto.getFirstName() + " " + userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+
+        //encrypt the password once we integrate spring security
+        //user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        Role role = roleRepository.findByName("ROLE_ADMIN");
+        if (role == null) {
+            role = checkRoleExist();
+        }
+        user.setRoles(Collections.singletonList(role));
+        userRepository.save(user);
+    }
 }
