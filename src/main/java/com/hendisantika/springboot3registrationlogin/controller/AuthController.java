@@ -1,8 +1,10 @@
 package com.hendisantika.springboot3registrationlogin.controller;
 
+import com.hendisantika.springboot3registrationlogin.dto.UserDto;
 import com.hendisantika.springboot3registrationlogin.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -28,5 +30,13 @@ public class AuthController {
     @GetMapping("/login")
     public String loginForm() {
         return "login";
+    }
+
+    // handler method to handle user registration request
+    @GetMapping("register")
+    public String showRegistrationForm(Model model) {
+        UserDto user = new UserDto();
+        model.addAttribute("user", user);
+        return "register";
     }
 }
