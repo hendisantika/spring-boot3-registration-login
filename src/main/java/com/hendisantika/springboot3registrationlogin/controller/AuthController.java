@@ -3,6 +3,7 @@ package com.hendisantika.springboot3registrationlogin.controller;
 import com.hendisantika.springboot3registrationlogin.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,4 +19,10 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
+
+    @GetMapping("index")
+    public String home() {
+        return "index";
+    }
+
 }
