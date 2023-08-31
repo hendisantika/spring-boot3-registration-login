@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot3-registration-login
@@ -60,5 +62,12 @@ public class AuthController {
         }
         userService.saveUser(user);
         return "redirect:/register?success";
+    }
+
+    @GetMapping("/users")
+    public String listRegisteredUsers(Model model) {
+        List<UserDto> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        return "users";
     }
 }
