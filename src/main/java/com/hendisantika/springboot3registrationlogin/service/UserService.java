@@ -64,4 +64,10 @@ public class UserService {
         userDto.setEmail(user.getEmail());
         return userDto;
     }
+
+    private Role checkRoleExist() {
+        Role role = new Role();
+        role.setName("ROLE_ADMIN");
+        return roleRepository.save(role);
+    }
 }
