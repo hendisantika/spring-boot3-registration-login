@@ -82,6 +82,10 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
+
     private UserDto convertEntityToDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());

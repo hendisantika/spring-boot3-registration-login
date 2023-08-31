@@ -83,16 +83,14 @@ public class AuthController {
     }
 
     @PostMapping("/users/update")
-    public String updateUsers(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
-//        User existing = userService.findByEmail(user.getEmail());
-//        if (existing != null) {
-//            result.rejectValue("email", null, "There is already an account registered with that email");
-//        }
-//        if (result.hasErrors()) {
-//            model.addAttribute("user", user);
-//            return "register";
-//        }
+    public String updateUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
         userService.updateUser(user);
         return "redirect:/login";
+    }
+
+    @GetMapping("/users/delete/{id}")
+    public String deleteUser(@PathVariable(value = "id") Long id) {
+        userService.deleteUserById(id);
+        return "redirect:/users";
     }
 }

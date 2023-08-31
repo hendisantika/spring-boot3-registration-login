@@ -51,6 +51,7 @@ public class SpringSecurity {
                                 .requestMatchers("/users").hasRole("ADMIN")
                                 .requestMatchers("/users/edit/**").hasRole("ADMIN")
                                 .requestMatchers("/users/update").hasRole("ADMIN")
+                                .requestMatchers("/users/delete/**").hasRole("ADMIN")
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
