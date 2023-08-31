@@ -8,3 +8,19 @@
 4. Open your favorite browser: http://localhost:8080
 
 ### Image Screen shot 
+
+Register User
+
+![Register User](img/register.png "Register User")
+
+User Login
+
+![User Login](img/login.png "User Login")
+
+List Users
+
+![List Users](img/list.png "List Users")
+
+Edit User
+
+![Edit User](img/edit.png "Edit User")
