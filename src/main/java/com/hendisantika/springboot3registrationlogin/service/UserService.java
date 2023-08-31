@@ -55,4 +55,13 @@ public class UserService {
         return users.stream().map((user) -> convertEntityToDto(user))
                 .collect(Collectors.toList());
     }
+
+    private UserDto convertEntityToDto(User user) {
+        UserDto userDto = new UserDto();
+        String[] name = user.getName().split(" ");
+        userDto.setFirstName(name[0]);
+        userDto.setLastName(name[1]);
+        userDto.setEmail(user.getEmail());
+        return userDto;
+    }
 }
